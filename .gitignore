@@ -4,3 +4,34 @@ import datetime
 
 # Настройка логгера
 logging.basicConfig(filename='dashaaa.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def number(N, k):
+    # Генерация случайного числа от 1 до N
+    secret_chislo = random.randint(1, N)
+    logging.info(f'Сгенерировано загаданное число: {secret_chislo}')
+
+    attempts = 0
+    while attempts < k:
+        try:
+            user_guess = int(input(f'Введите число от 1 до {N}: '))
+            logging.info(f'Пользователь ввел число: {user_guess}')
+        except ValueError:
+            print('Ошибка! Введите целое число.')
+            logging.error('Ошибка ввода: введено нецелое число')
+            continue
+
+        if user_guess == secret_chislo:
+            print('Вы угадали!')
+            logging.info('Пользователь угадал число')
+            return
+        elif user_guess < secret_chislo:
+            print('Загаданное число больше')
+            logging.info('Загаданное число больше введенного пользователем числа')
+        else:
+            print('Загаданное число меньше')
+            logging.info('Загаданное число меньше введенного пользователем числа')
+
+        attempts += 1
+
+    print('Попытки закончились. Загаданное число:', secret_chislo)
+    logging.info(f'Попытки закончились. Загаданное число: {secret_chislo}')
